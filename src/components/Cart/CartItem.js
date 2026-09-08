@@ -1,6 +1,6 @@
 import classes from './CartItem.module.css';
 
-const CartItem = (props) => {
+function CartItem(props) {
   const { title, quantity, total, price } = props.item;
 
   return (
@@ -23,6 +23,6 @@ const CartItem = (props) => {
       </div>
     </li>
   );
-};
+}
 
 export default CartItem;
