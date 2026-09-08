@@ -13,11 +13,20 @@ const cartSlice = createSlice({
       state.showCart = !state.showCart;
     },
 
+    hideCart(state) {
+      state.showCart = false;
+    },
+
+    showCart(state) {
+      state.showCart = true;
+    },
+
     addCartItem(state) {
       ++state.cartQuantity;
     },
 
     removeCartItem(state) {
+      if (state.cartQuantity <= 0) return;
       --state.cartQuantity;
     },
   },
