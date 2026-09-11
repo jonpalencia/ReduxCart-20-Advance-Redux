@@ -1,33 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialCartState = {
+  cartItems: [],
   cartQuantity: 0,
-  showCart: false,
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: initialCartState,
   reducers: {
-    toggleCart(state) {
-      state.showCart = !state.showCart;
-    },
-
-    hideCart(state) {
-      state.showCart = false;
-    },
-
-    showCart(state) {
-      state.showCart = true;
-    },
-
-    addCartItem(state) {
+    addItemToCart(state, action) {
       ++state.cartQuantity;
+      const existingItemIndex = state.cartItems.findIndex(
+        item => item.id === action.payload.id,
+      );
+      const existingCartItem = state.cartItems[existingItemIndex];
+      if (existingCartItem) {
+        state.cartItems[existingItemIndex].quantity  = existingCartItem.quantity + 1 // prettier-ignore
+        state.cartItems[existingItemIndex].totalPrice = existingCartItem.totalPrice + existingCartItem.price; // prettier-ignore
+      } else {
+        const newCartItem = action.payload;
+        newCartItem.quantity = 1;
+        newCartItem.totalPrice = newCartItem.price;
+        state.cartItems.push(newCartItem);
+      }
     },
 
-    removeCartItem(state) {
+    removeItemToCart(state, action) {
       if (state.cartQuantity <= 0) return;
       --state.cartQuantity;
+      const findItemIndex = state.cartItems.findIndex(
+        item => item.id === action.payload,
+      );
+      const findCartItems = state.cartItems[findItemIndex];
+      if (findCartItems.quantity > 1) {
+        state.cartItems[findItemIndex].quantity = findCartItems.quantity - 1;
+        state.cartItems[findItemIndex].totalPrice = findCartItems.totalPrice - findCartItems.price; // prettier-ignore
+      } else {
+        const filterOutItem = state.cartItems.filter(
+          item => item.id !== action.payload,
+        );
+        state.cartItems = filterOutItem;
+      }
     },
   },
 });
