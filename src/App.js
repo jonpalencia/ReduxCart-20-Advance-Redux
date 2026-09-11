@@ -5,8 +5,7 @@ import Products from './components/Shop/Products';
 
 function App() {
   const cartQuantity = useSelector(state => state.cart.cartQuantity);
-  const showCart = useSelector(state => state.cart.showCart);
-  console.log(showCart);
+  const showCart = useSelector(state => state.cartUI.showCart);
 
   return (
     <Layout>

@@ -1,19 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { cartAction } from '../../store/cart';
+import { cartUIAction } from '../../store/cartUI-slice';
 import Card from '../UI/Card';
 import classes from './ProductItem.module.css';
-import { cartAction } from '../../store/cart';
 
 function ProductItem(props) {
-  const { title, price, description } = props;
+  const { id, title, price, description, totalPrice, quantity } = props;
   const cartQuantity = useSelector(state => state.cart.cartQuantity);
   const dispatch = useDispatch();
   const handleAddItemToCart = function () {
-    if (cartQuantity === 0) {
-      dispatch(cartAction.addCartItem());
-      dispatch(cartAction.showCart());
-      return;
-    }
-    dispatch(cartAction.addCartItem());
+    if (cartQuantity === 0) dispatch(cartUIAction.showCart());
+    dispatch(
+      cartAction.addItemToCart({
+        id,
+        title,
+        price,
+        description,
+        totalPrice,
+        quantity,
+      }),
+    );
   };
 
   return (

@@ -4,20 +4,23 @@ import classes from './Cart.module.css';
 import CartItem from './CartItem';
 
 function Cart() {
-  const cartQuantity = useSelector(state => state.cart.cartQuantity);
+  const cartItems = useSelector(state => state.cart.cartItems);
 
   return (
     <Card className={classes.cart}>
       <h2>Your Shopping Cart</h2>
       <ul>
-        <CartItem
-          item={{
-            title: 'Test Item',
-            quantity: cartQuantity,
-            total: 18,
-            price: 6,
-          }}
-        />
+        {cartItems.map(item => (
+          <CartItem
+            key={item.id}
+            id={item.id}
+            description={item.description}
+            title={item.title}
+            quantity={item.quantity}
+            totalPrice={item.totalPrice}
+            price={item.price}
+          />
+        ))}
       </ul>
     </Card>
   );
