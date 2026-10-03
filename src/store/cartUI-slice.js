@@ -2,6 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const cartUI_initialState = {
   showCart: false,
+  notification: {
+    status: '',
+    title: '',
+    message: '',
+  },
 };
 
 const cartUISlice = createSlice({
@@ -16,6 +21,14 @@ const cartUISlice = createSlice({
     },
     hideCart(state) {
       state.showCart = false;
+    },
+    showNotification(state, action) {
+      state.notification.status = action.payload.status;
+      state.notification.title = action.payload.title;
+      state.notification.message = action.payload.message;
+    },
+    resetNotification(state) {
+      state.notification = cartUI_initialState.notification;
     },
   },
 });
