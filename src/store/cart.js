@@ -16,8 +16,8 @@ const cartSlice = createSlice({
       );
       const existingCartItem = state.cartItems[existingItemIndex];
       if (existingCartItem) {
-        state.cartItems[existingItemIndex].quantity  = existingCartItem.quantity + 1 // prettier-ignore
-        state.cartItems[existingItemIndex].totalPrice = existingCartItem.totalPrice + existingCartItem.price; // prettier-ignore
+        existingCartItem.quantity  = existingCartItem.quantity + 1 // prettier-ignore
+        existingCartItem.totalPrice = existingCartItem.totalPrice + existingCartItem.price; // prettier-ignore
       } else {
         const newCartItem = action.payload;
         newCartItem.quantity = 1;
