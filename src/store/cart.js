@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { cartUIAction } from './cartUI-slice';
+import { FIREBASE_URL } from '../utils/firebaseConfig';
 
 const initialCartState = {
   cartItems: [],
@@ -45,6 +47,42 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const sendCartData = function (cart) {
+  return async dispatch => {
+    dispatch(
+      cartUIAction.showNotification({
+        status: 'Pending',
+        title: 'Sending request',
+        message: 'Your request is sending',
+      }),
+    );
+
+    try {
+      const response = await fetch(FIREBASE_URL, {
+        method: 'PUT',
+        body: JSON.stringify(cart),
+      });
+
+      if (!response.ok) throw new Error('Error, please try again...');
+      dispatch(
+        cartUIAction.showNotification({
+          status: 'success',
+          title: 'Request success',
+          message: 'Your cart is successfully updated!',
+        }),
+      );
+    } catch (err) {
+      dispatch(
+        cartAction.showNotification({
+          status: 'error',
+          title: 'Failed to load cart',
+          message: err.message,
+        }),
+      );
+    }
+  };
+};
 
 export const cartAction = cartSlice.actions;
 export default cartSlice.reducer;
