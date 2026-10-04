@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { cartUIAction } from './store/cartUI-slice';
+import { sendCartData } from './store/cart-actions';
 
 import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
-import { sendCartData } from './store/cart';
 
 function App() {
   const dispatch = useDispatch();
